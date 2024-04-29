@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from utilities import categorise_data, filter_category, calculate_zscore, get_column
+from utilities import filter_category, calculate_zscore, get_column
 import numpy as np
 import time
 
@@ -42,24 +42,17 @@ def classify(description, categories):
             category_score = {label: score for label, score in zip(
                 output['labels'], output['scores'])}
 
-            # print(output)
         except Exception as e:
             print("Incorrect output in classify:", output)
             time.sleep(30)
             return
 
         results = {**results, **category_score}
-        # print(category_score)
     results = dict(
         sorted(results.items(), key=lambda item: item[1], reverse=True))
-    # print(results)
     top10 = list(results.items())[:10]
     keys = [item[0] for item in top10]
-    # print(keys)
     max_category = (classify_top10(description, keys))
-    # find category with max score
-    # max_category = max(results, key=results.get)
-    # print(max_category, results[max_category])
     print(description)
     print(max_category)
     return max_category
@@ -77,7 +70,6 @@ def classify_top10(description, top10):
         return
 
     results = category_score
-    # print(category_score)
     results = dict(
         sorted(results.items(), key=lambda item: item[1], reverse=True))
     print(results)
@@ -86,6 +78,41 @@ def classify_top10(description, top10):
     max_category = max(results, key=results.get)
     return max_category
 
+
+def categorise_data(file_path, categorise, output_file, temp_file, categories):
+    index = 0
+    save_interval = 25
+    results = {}
+    df = pd.read_excel(file_path)
+    num_categorised = 0
+    plugins = dict(zip(df['title'], df['description']))
+    for title, description in plugins.items():
+        num_categorised += 1
+        print(num_categorised)
+        category = categorise(description, categories)
+        results[title] = {
+            'description': description,
+            'category': category
+        }
+        # index to keep track of how many plugins have been categorised
+        print("\n")
+        index += 1
+        # save data in intervals
+        if index % save_interval == 0:
+            try:
+                # Add a new column 'category' with the results to the DataFrame
+                df['category'] = [results[title]['category'] if title in results else None
+                                  for title in df['title']]
+                df.to_excel(temp_file, index=False)
+            except Exception as e:
+                print(e)
+                pass
+
+    # Save once entire file is categorised
+    df['category'] = [results[title]['category'] for title in df['title']]
+    df.to_excel(output_file, index=False)
+
+
 # execution example
-# categorise_data('plugins_scrape/plugin_2024-03-19.xlsx', classify,
-#                 'categorisation_result.xlsx', 'categorisation_partial.xlsx', categories)
+categorise_data('../../dataset/plugins_scrape/plugin_2024-03-19.xlsx', classify,
+                'categorisation_result.xlsx', 'categorisation_partial.xlsx', categories)

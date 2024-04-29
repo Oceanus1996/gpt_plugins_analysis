@@ -16,6 +16,7 @@ def country_pretrained(text_list):
         for entity in doc.ents:
             entity_text = entity.text
             entity_label = entity.label_
+            # filter entities based on label
             if entity_label == "GPE" or entity_label == "NORP":
                 entity_counts[entity_text+","+entity_label] += 1
 
@@ -24,6 +25,6 @@ def country_pretrained(text_list):
 
 # execution example
 # plugin_descriptions = get_column(
-#     'plugins_scrape/plugin_2024-03-19.xlsx', 'description')
+#     '../../dataset/plugins_scrape/plugin_2024-03-19.xlsx', 'description')
 # plugin_descriptions.pop()
 # country_pretrained(plugin_descriptions)

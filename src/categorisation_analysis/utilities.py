@@ -2,48 +2,6 @@ import pandas as pd
 import numpy as np
 
 
-def query_classification(query, description, categories):
-    return query({
-        "inputs": description,
-        "parameters": {"candidate_labels": list(categories.values())},
-    })
-
-
-def categorise_data(file_path, categorise, output_file, temp_file, categories):
-    index = 0
-    save_interval = 25
-    results = {}
-    df = pd.read_excel(file_path)
-    num_categorised = 0
-    plugins = dict(zip(df['title'], df['description']))
-    for title, description in plugins.items():
-        num_categorised += 1
-        print(num_categorised)
-        category = categorise(description, categories)
-        results[title] = {
-            'description': description,
-            'category': category
-        }
-        # to keep track of how many plugins have been categorised
-        print("\n")
-        index += 1
-    # print(results)
-    # save intervals of data
-        if index % save_interval == 0:
-            try:
-                # Add a new column 'category' with the results to the DataFrame
-                df['category'] = [results[title]['category'] if title in results else None
-                                  for title in df['title']]
-                df.to_excel(temp_file, index=False)
-            except Exception as e:
-                print(e)
-                pass
-
-    # Save once entire file is categorised
-    df['category'] = [results[title]['category'] for title in df['title']]
-    df.to_excel(output_file, index=False)
-
-
 def filter_category(file_path, category, output_file):
     df = pd.read_excel(file_path)
 

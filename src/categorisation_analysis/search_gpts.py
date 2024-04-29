@@ -1,14 +1,12 @@
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 from time import sleep
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from utilities import get_column
 import os
-from collections import Counter
 
 
 def scrapeGPTs(category):
@@ -43,7 +41,6 @@ def scrapeGPTs(category):
 
     except:
         print("loadmore button not found")
-        # print(loadmore_num)
 
     try:
         gpts_titles = driver.find_elements(
@@ -71,11 +68,6 @@ def scrapeGPTs(category):
 
         # Save DataFrame to an Excel file
         df.to_excel(f'{category}_GPTs.xlsx', index=False)
-
-    #     for title, description in gpts_dict.items():
-    #         print(f"Title: {title}")
-    #         print(f"Description: {description}")
-    #         print()
 
     finally:
         driver.quit()
@@ -105,8 +97,10 @@ def searchGPTs(names):
         input_text = name
         input_bar.send_keys(input_text)
         input_bar.send_keys(Keys.RETURN)
+        # Scroll down by 500 pixels
         driver.execute_script("window.scrollTo(0, 500);")
         sleep(10)
+        # process name to remove restricted characters/symbols
         name = name.replace(
             ':', '').replace('?', '').replace(' ', '_').replace('/', '_')
         screenshot_name = f"gpts_ss/{name}_ss.png"
@@ -119,9 +113,9 @@ def searchGPTs(names):
 
     driver.quit()
 
+# example execution
+# plugin_titles = get_column(
+#     '../../dataset/plugins_scrape/plugin_2024-03-19.xlsx', 'title')
+# plugin_titles.pop()
 
-plugin_titles = get_column(
-    'plugins_scrape/plugin_2024-03-19.xlsx', 'title')
-plugin_titles.pop()
-
-searchGPTs(plugin_titles)
+# searchGPTs(plugin_titles)
