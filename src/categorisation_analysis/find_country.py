@@ -22,8 +22,8 @@ def country_pretrained(text_list):
     for entity, count in entity_counts.items():
         print(entity, count)
 
-
-plugin_descriptions = get_column(
-    'plugins_scrape/plugin_2024-03-19.xlsx', 'description')
-plugin_descriptions.pop()
-country_pretrained(plugin_descriptions)
+# execution example
+# plugin_descriptions = get_column(
+#     'plugins_scrape/plugin_2024-03-19.xlsx', 'description')
+# plugin_descriptions.pop()
+# country_pretrained(plugin_descriptions)

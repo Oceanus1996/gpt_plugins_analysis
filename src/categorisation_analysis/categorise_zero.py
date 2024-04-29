@@ -86,8 +86,6 @@ def classify_top10(description, top10):
     max_category = max(results, key=results.get)
     return max_category
 
-
-classify("Text to smart-contract. Describe a process to generate a smart-contract and deploy to any blockchain.",
-         categories)
-categorise_data('plugins_scrape/plugin_2024-03-19.xlsx', classify,
-                'categorisation_result.xlsx', 'categorisation_partial.xlsx', categories)
+# execution example
+# categorise_data('plugins_scrape/plugin_2024-03-19.xlsx', classify,
+#                 'categorisation_result.xlsx', 'categorisation_partial.xlsx', categories)
