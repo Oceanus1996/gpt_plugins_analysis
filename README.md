@@ -8,6 +8,8 @@
 │ │ ├── find_country.py
 │ │ ├── search_gpts.py
 │ │ ├── utilities.py
+│ ├── Exposure analysis
+│ │ ├── Exposure analysis.py
 ├── dataset
 │ ├── plugins_scrape
 │ ├── plugin_categories.xlsx
@@ -31,6 +33,7 @@ Description for each of the main files are as follows.
 
 ```utilities.py``` : File for utilities functions such as filtering a specific category, get a column from an excel file as a python list, and merging excel files based on common attributes. 
 
+```Exposure analysis.py```:Execute and detect plugin file exposure and consistency issues, including manifest file exposure, illegal API request testing, and related information consistency testing.
 <h1>dataset</h1>
 <br>
 
