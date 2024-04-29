@@ -17,7 +17,7 @@ Note: This tree includes only main files.
 
 Description for each of the main files are as follows.
 
-**src** 
+<h1>src</h1>
 <br>
 
 **categorisation_analysis**
@@ -31,5 +31,11 @@ Description for each of the main files are as follows.
 
 ```utilities.py``` : File for utilities functions such as filtering a specific category, get a column from an excel file as a python list, and merging excel files based on common attributes. 
 
+<h1>dataset</h1>
+<br>
 
+**plugins_scrape** : A folder containing Excel files listing all plugins on the plugin store and their associated information collected daily from 20/11/2023 to 19/3/2024.
+<br>
+
+```plugin_categories.xlsx``` : An Excel file containing plugins and their assigned categories. An overview tally of each category is calculated at the end of the file. This file utilizes the plugin scrape version of 10/1/2024.
 
